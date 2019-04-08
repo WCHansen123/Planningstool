@@ -17,7 +17,7 @@ include 'resources/include/Header.html';
 <body>
 
 	<div class="col-10 offset-1 border">
-		<form  action="index.php" method="post"> 
+		<form method="post"> 
 			<select name="spel">
 				<option value="Counterfeiters">Counterfeiters</option>
 				<option value="7 Wonders">7 Wonders</option>
@@ -46,17 +46,21 @@ include 'resources/include/Header.html';
 				<option value="Everyone is John">Everyone is John</option>
 			</select>
 			<br>
-			<input required type="text" name="spelers" placeholder="Bijv: Wilco, Bjorn, Justin en Nick" value="<?php echo $_POST['spelers'];?>"> <span class="error">* <?php echo $dataErr["spelers"];?></span>
+			<input type="text" name="spelers" placeholder="Bijv: Wilco, Bjorn, Justin en Nick" value="<?php echo $_POST['spelers'];?>"> <span class="error">* <?php echo $dataErr["spelers"];?></span>
 			<br>
-			<input required type="text" name="spelleider" value="<?php echo $_POST['spelleider'];?>"> <span class="error">* <?php echo $dataErr["spelleider"];?></span>
+			<input type="text" name="spelleider" value="<?php echo $_POST['spelleider'];?>"> <span class="error">* <?php echo $dataErr["spelleider"];?></span>
 			<br>
-			<input required type="time" name="starttijd" value="<?php echo $_POST['starttijd'];?>"> <span class="error">* <?php echo $dataErr["starttijd"];?></span>
+			<input type="time" name="starttijd" value="<?php echo $_POST['starttijd'];?>"> <span class="error">* <?php echo $dataErr["starttijd"];?></span>
 			<br>
-			<input required type="date" name="datum" value="<?php echo $_POST['datum'];?>"> <span class="error">* <?php echo $dataErr["datum"];?></span>
+			<input type="date" name="datum" value="<?php echo $_POST['datum'];?>"> <span class="error">* <?php echo $dataErr["datum"];?></span>
 			<br>
 
 			<input type="submit" name="submit">
 		</form>
+
+		<div class="border float-right">
+			
+		</div>
 	</div>
 
 </body>

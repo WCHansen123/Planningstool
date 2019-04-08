@@ -11,10 +11,17 @@ input{
 }
 
 select{
+	width: 300px;
 	margin-top: 20px;
 	border-radius: 8px;
 }
 
 span{
 	color: red;
+}
+
+/*used for some <p> elements to create some space*/
+.filler{ 
+	margin-left: 10px;
+	margin-top: 10px;
 }

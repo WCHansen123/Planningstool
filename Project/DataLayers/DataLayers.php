@@ -17,15 +17,16 @@ $questions = ["spel", 'spelers', 'spelleider', 'starttijd', 'datum'];
 			
 			if (empty($_POST[$value])) {
 				$canProcess = false;
+				$dataErr[$value] = "Vul dit veld ook in";
 			}
 			else{
 				$data[$value] = test_input($_POST[$value]);
 			}
 		}
-		// var_dump($data);
-		// var_dump($canProcess);
 		if($canProcess){
 			InsertAppointment($data);
+			header("Location: index.php");
+
 		}
 	}
 
@@ -48,7 +49,7 @@ function test_input($data) {
     $conn = new PDO("mysql:host=".$servername.";dbname=" . $database, $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
+    // echo "Connected successfully";
     }
 catch(PDOException $e)
     {
@@ -70,45 +71,17 @@ catch(PDOException $e)
 
 	}
 
+	function GetAppointments(){
+		$conn = MakeSQLConnection();
 
-	// function GetAllGames(){
+		$query = "SELECT * FROM Planning";
 
-	// 	$conn = MakeSQLConnection();
+		$stmt = $conn->prepare($query);
+		$stmt->execute();
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-	// 	$sql = "SELECT * FROM games";
-
-	// 	$result = $conn->query($sql);
-
-	// 	$games = [];
-
-	// 	if ($result->num_rows > 0) {
-	// 	    // output data of each row
-	// 	    while($row = $result->fetch_assoc()) {
-	// 	      $games[]= $row;
-	// 	    }
-	// 	} else {
-	// 	    echo "0 results";
-	// 	}
-	// 	$conn->close();
-
-	// 	return $games;
-	// }
-
-	// $players = [];
-
-	// function AddPlayer(){
-	// 	$conn = MakeSQLConnection();
-	// 	$sql = "INSERT INTO planning (id, spelers) VALUES (null, 'wilco en bjorn')";
-	// 	$result = $conn->query($sql);
-		
-	// 	$conn->close();
-
-	// }
-
-
-	// $players = AddPlayer();
-
-
-
-
+		$planning= $stmt-> fetchAll();
+		$conn = null;
+		return $planning;
+	}
 
