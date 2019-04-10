@@ -10,7 +10,6 @@ require '../DataLayers/DataLayers.php';
 
 
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,24 +26,34 @@ require '../DataLayers/DataLayers.php';
 	<?php
 		include 'resources/include/Header.html';
 	?>
+
+		<img src="../website/resources/img/banner.png" class=" row col-10 offset-1 header">
+
+		
+			<div class="col-10 offset-1 menu">
+				<div class="menudivje">
+					<a href="index.php"><strong>planning</strong></a>
+					<a href="planning.php"><strong>plan je dag</strong></a>
+				</div>
+			</div>
+		
 	
 		<?php 
 			foreach (GetAppointments() as $array) {
 		?>
-			<div class="col-10 offset-1 border">
-				<div class="col-3 border ">
+			<div class=" row col-10 offset-1 planning bg-white border">
+				<div class="col-3 ">
 					<h5 class="filler"><strong> Datum: <?php echo $array["datum"];?> </strong></h5>
 					<hr>
 					<p class="filler"><i class="fas fa-dice"></i> <?php echo $array["spel"];?></p>
-					<p class="filler"><i class="far fa-clock"></i> Spel duratie</p>
+					<p class="filler"><i class="far fa-clock"></i> <?php echo $array["starttijd"];?></p>
 					<p class="filler"><i class="fas fa-user"></i> <?php echo $array["spelleider"];?></p>
 					<p class="filler"><i class="fas fa-users"></i> <?php echo $array["spelers"];?></p>
 				</div>
 				<div class="col-9 border d-block">
-					
+					oke
 				</div>
 			</div>
-		<br>
 
 		<?php
 			};

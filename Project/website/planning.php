@@ -1,7 +1,6 @@
 <?php 
 require '../DataLayers/DataLayers.php';
 include 'resources/include/Header.html';
-
 ?>
 
 <!DOCTYPE html>
@@ -16,34 +15,15 @@ include 'resources/include/Header.html';
 </head>
 <body>
 
-	<div class="col-10 offset-1 border">
-		<form method="post"> 
-			<select name="spel">
-				<option value="Counterfeiters">Counterfeiters</option>
-				<option value="7 Wonders">7 Wonders</option>
-				<option value="Camel Up">Camel Up</option>
-				<option value="Roborally">Roborally</option>
-				<option value="Codenames: Picturesa">Codenames: Picturesa</option>
-				<option value="Dale of Merchants">Dale of Merchants</option>
-				<option value="Dixit: Odyssey">Dixit: Odyssey</option>
-				<option value="Concept">Concept</option>
-				<option value="10 minuten kraak">10 minuten kraak</option>
-				<option value="Ghost Fightin' Treasure Hunters">Ghost Fightin' Treasure Hunters</option>
-				<option value="Downforce">Downforce</option>
-				<option value="City of Horror">City of Horror</option>
-				<option value="Fantasy Realms">Fantasy Realms</option>
-				<option value="The Estates">The Estates</option>
-				<option value="Lemming Maffia">Lemming Maffia</option>
-				<option value="Micropolis">Micropolis</option>
-				<option value="Mysterium">Mysterium</option>
-				<option value="Spyfall">Spyfall</option>
-				<option value="Keep Talking and Nobody Explodes">Keep Talking and Nobody Explodes</option>
-				<option value="Not Alone">Not Alone</option>
-				<option value="The Climbers">The Climbers</option>
-				<option value="Gizmos">Gizmos</option>
-				<option value="The Dragon & Flagon">The Dragon & Flagon</option>
-				<option value="Pandemic">Pandemic</option>
-				<option value="Everyone is John">Everyone is John</option>
+	<img src="../website/resources/img/banner.png" class=" row col-10 offset-1 ">
+	<div class="row col-10 offset-1 border planning">
+		<form method="post" class="col-6 "> 
+			<select id="button" name="spel">
+  				<?php 
+  					foreach (GetGames() as $array) {
+    				printf('<option value="'. $array["id"].'">'. $array["name"] . '</option>');
+  					}
+  				?>
 			</select>
 			<br>
 			<input type="text" name="spelers" placeholder="Bijv: Wilco, Bjorn, Justin en Nick" value="<?php echo $_POST['spelers'];?>"> <span class="error">* <?php echo $dataErr["spelers"];?></span>
@@ -58,10 +38,41 @@ include 'resources/include/Header.html';
 			<input type="submit" name="submit">
 		</form>
 
-		<div class="border float-right">
+		<div class="col-6 gamepic bg-white">
 			
+
 		</div>
 	</div>
 
+
 </body>
 </html>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+
+<script type="text/javascript">
+  
+
+
+ $(document).ready(function(){
+    $('select#button').change(function(){
+      console.log(this.value);
+        $.ajax({
+            url: '../DataLayers/reciever.php',
+            type: 'POST',
+            data: {value:this.value},
+            dataType: 'html',
+            success: function (data) {
+                $('.gamepic').html(data);
+            }
+        });
+
+    });
+});
+
+
+</script>

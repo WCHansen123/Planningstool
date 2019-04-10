@@ -17,7 +17,7 @@ $questions = ["spel", 'spelers', 'spelleider', 'starttijd', 'datum'];
 			
 			if (empty($_POST[$value])) {
 				$canProcess = false;
-				$dataErr[$value] = "Vul dit veld ook in";
+				$dataErr[$value] = "!";
 			}
 			else{
 				$data[$value] = test_input($_POST[$value]);
@@ -74,7 +74,7 @@ catch(PDOException $e)
 	function GetAppointments(){
 		$conn = MakeSQLConnection();
 
-		$query = "SELECT * FROM Planning";
+		$query = "SELECT planning.*, games.image FROM `planning` INNER JOIN `games` ON `planning`.`spel`=`games`.`id ";
 
 		$stmt = $conn->prepare($query);
 		$stmt->execute();
@@ -84,4 +84,19 @@ catch(PDOException $e)
 		$conn = null;
 		return $planning;
 	}
+
+	function GetGames(){
+    $conn = MakeSQLConnection();
+
+    $query = "SELECT * FROM games";
+
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+    $games= $stmt-> fetchAll();
+    $conn = null;
+    return $games;
+  }
+
 
