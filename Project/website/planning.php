@@ -1,12 +1,43 @@
 <?php 
 require '../DataLayers/DataLayers.php';
 include 'resources/include/Header.html';
+
+
+$questions = ["spel", 'spelers', 'spelleider', 'starttijd', 'datum'];
+
+
+	$data = [];
+	$dataErr = [];
+	$canProcess = true;
+
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		foreach ($questions as $value) {
+
+			$data[$value] = "";
+			$dataErr[$value] = "";
+
+			
+			if (empty($_POST[$value])) {
+				$canProcess = false;
+				$dataErr[$value] = "!";
+			}
+			else{
+				$data[$value] = test_input($_POST[$value]);
+			}
+		}
+		if($canProcess){
+			InsertAppointment($data);
+			header("Location: index.php");
+
+		}
+	}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
+	<!-- <meta charset="utf-8"> -->
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -15,9 +46,8 @@ include 'resources/include/Header.html';
 </head>
 <body>
 
-	<img src="../website/resources/img/banner.png" class=" row col-10 offset-1 ">
 	<div class="row col-10 offset-1 border planning">
-		<form method="post" class="col-6 "> 
+		<form autocomplete="off" method="post" class="col-6 "> 
 			<select id="button" name="spel">
   				<?php 
   					foreach (GetGames() as $array) {
@@ -26,21 +56,19 @@ include 'resources/include/Header.html';
   				?>
 			</select>
 			<br>
-			<input type="text" name="spelers" placeholder="Bijv: Wilco, Bjorn, Justin en Nick" value="<?php echo $_POST['spelers'];?>"> <span class="error">* <?php echo $dataErr["spelers"];?></span>
+			<input type="text" name="spelers" placeholder="Naam deelnemers:"> <span class="error">* <?php echo $dataErr["spelers"];?></span>
 			<br>
-			<input type="text" name="spelleider" value="<?php echo $_POST['spelleider'];?>"> <span class="error">* <?php echo $dataErr["spelleider"];?></span>
+			<input type="text" name="spelleider" placeholder="Spelleider:"> <span class="error">* <?php echo $dataErr["spelleider"];?></span>
 			<br>
-			<input type="time" name="starttijd" value="<?php echo $_POST['starttijd'];?>"> <span class="error">* <?php echo $dataErr["starttijd"];?></span>
+			<input type="time" name="starttijd"> <span class="error">*<?php echo $dataErr["starttijd"];?></span>
 			<br>
-			<input type="date" name="datum" value="<?php echo $_POST['datum'];?>"> <span class="error">* <?php echo $dataErr["datum"];?></span>
+			<input type="date" name="datum"> <span class="error">* <?php echo $dataErr["datum"];?></span>
 			<br>
 
 			<input type="submit" name="submit">
 		</form>
 
 		<div class="col-6 gamepic bg-white">
-			
-
 		</div>
 	</div>
 

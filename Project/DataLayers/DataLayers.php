@@ -1,34 +1,7 @@
 
 <?php
 
-$questions = ["spel", 'spelers', 'spelleider', 'starttijd', 'datum'];
 
-
-	$data = [];
-	$dataErr = [];
-	$canProcess = true;
-
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		foreach ($questions as $value) {
-
-			$data[$value] = "";
-			$dataErr[$value] = "";
-
-			
-			if (empty($_POST[$value])) {
-				$canProcess = false;
-				$dataErr[$value] = "!";
-			}
-			else{
-				$data[$value] = test_input($_POST[$value]);
-			}
-		}
-		if($canProcess){
-			InsertAppointment($data);
-			header("Location: index.php");
-
-		}
-	}
 
 function test_input($data) {
   $data = trim($data);
@@ -71,10 +44,25 @@ catch(PDOException $e)
 
 	}
 
+	function Edit($data){
+		$conn = MakeSQLConnection();
+
+		var_dump($data);
+
+		$query = "UPDATE Planning SET spel=:spel, spelers=:spelers, spelleider=:spelleider, starttijd=:starttijd, datum=:datum WHERE id=:id";
+
+		$stmt = $conn->prepare($query);
+	    $stmt->execute([':id' => $_GET['id'], ':spel' => $_POST['spel'], ':spelers' => $_POST['spelers'], ':spelleider' => $_POST['spelleider'],  ':starttijd' => $_POST['starttijd'], ':datum' => $_POST['datum']]);
+	    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+	    $conn = null;
+	    return true;
+	}
+
 	function GetAppointments(){
 		$conn = MakeSQLConnection();
 
-		$query = "SELECT planning.*, games.image FROM `planning` INNER JOIN `games` ON `planning`.`spel`=`games`.`id ";
+		$query = "SELECT planning.*, games .name, games .image FROM planning INNER JOIN games ON planning. spel=games .id";
 
 		$stmt = $conn->prepare($query);
 		$stmt->execute();
@@ -83,6 +71,20 @@ catch(PDOException $e)
 		$planning= $stmt-> fetchAll();
 		$conn = null;
 		return $planning;
+	}
+
+	function GetAppointment($id){
+		$conn = MakeSQLConnection();
+
+		$query = "SELECT * FROM Planning WHERE id=:id";
+
+		$stmt = $conn->prepare($query);
+	    $stmt->execute([':id' => $id]);
+	    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+	    $data= $stmt-> fetch();
+	    $conn = null;
+	    return $data;
 	}
 
 	function GetGames(){
@@ -100,3 +102,16 @@ catch(PDOException $e)
   }
 
 
+  function GetGame(){
+    $conn = MakeSQLConnection();
+
+    $query = "SELECT * FROM games WHERE id=:id";
+
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':id' => $_GET['id']]);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+    $game= $stmt-> fetchAll();
+    $conn = null;
+    return $game;
+  }

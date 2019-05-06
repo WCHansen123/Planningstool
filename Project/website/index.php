@@ -5,6 +5,8 @@ require '../DataLayers/DataLayers.php';
 
 
 
+
+
 // foreach (GetAppointments() as $array) {
 // 	echo $array["spel"];}
 
@@ -25,33 +27,26 @@ require '../DataLayers/DataLayers.php';
 <body>
 	<?php
 		include 'resources/include/Header.html';
+		header('content-Type: text/html; charset=utf-8');
 	?>
-
-		<img src="../website/resources/img/banner.png" class=" row col-10 offset-1 header">
-
-		
-			<div class="col-10 offset-1 menu">
-				<div class="menudivje">
-					<a href="index.php"><strong>planning</strong></a>
-					<a href="planning.php"><strong>plan je dag</strong></a>
-				</div>
-			</div>
 		
 	
 		<?php 
 			foreach (GetAppointments() as $array) {
 		?>
-			<div class=" row col-10 offset-1 planning bg-white border">
-				<div class="col-3 ">
+			<div class=" row col-md-10 col-lg-5 offset-md-1 offset-lg-3 bg-white border space ">
+				<div class="col-lg-4 col-md-4 ">
 					<h5 class="filler"><strong> Datum: <?php echo $array["datum"];?> </strong></h5>
 					<hr>
-					<p class="filler"><i class="fas fa-dice"></i> <?php echo $array["spel"];?></p>
+					<p class="filler"><i class="fas fa-dice"></i> <?php echo $array["name"];?></p>
 					<p class="filler"><i class="far fa-clock"></i> <?php echo $array["starttijd"];?></p>
 					<p class="filler"><i class="fas fa-user"></i> <?php echo $array["spelleider"];?></p>
 					<p class="filler"><i class="fas fa-users"></i> <?php echo $array["spelers"];?></p>
 				</div>
-				<div class="col-9 border d-block">
-					oke
+				<div class="col-lg-8 col-md-8 border d-block">
+					<img class="gamepic" src="../website/resources/img/<?php echo $array['image']?>">
+					<a class="float-left" href="edit.php?id=<?php echo $array['id']; ?>">Planning aanpassen</a>
+					<a class="float-right" href="game_detail.php?id=<?php echo $array['spel']; ?>">Meer info</a>
 				</div>
 			</div>
 

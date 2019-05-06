@@ -6,6 +6,7 @@ $result = GetPic();
 
 printf("<img class=\"gamepic\" src=\"../website/resources/img/%s\">", $result["image"]);
 // als het niet werkt voeg dan een <p> toe met teksts
+printf ("<a href='game_detail.php?id=".$_POST['value']."'>"."meer weten?</a>");
 ?>
 
  <?php 
